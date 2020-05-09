@@ -25,14 +25,18 @@ class AGDS:
         for attr in self.categories.keys():
             print('Key: ', attr)
             print('Values: ', self.categories[attr])
-            res, vals = self.categories[attr].find_value_for_ref(index)
+            res = self.categories[attr].find_value_for_ref(index)
             weig = self.categories[attr].neighbour_weight(res)
-            print('VAL: ', vals, ' WEI: ', weig)
-            for i in range(0, len(vals)):
-                self.instances[vals[i].references] = self.instances[vals[i].references] + weig[i]*self.conn_weight
+            print(' WEI: ', weig)
+            # for i in range(0, len(vals)):
+            #     self.instances[vals[i].references] = self.instances[vals[i].references] + weig[i]*self.conn_weight
+            #     # print("After adding: ", self.instances)
+            nodes = self.categories[attr].node_list
+            for i in range(0, self.categories[attr].length):
+                self.instances[nodes[i].references] = self.instances[nodes[i].references] + weig[i]*self.conn_weight
                 # print("After adding: ", self.instances)
 
-        return self.instances, np.nonzero(self.instances > 0.5)
+        return self.instances, np.nonzero(self.instances > 0.97)
 
 
 

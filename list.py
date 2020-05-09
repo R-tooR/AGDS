@@ -47,39 +47,40 @@ class List(ValueStore):
     def find_value_for_ref(self, index):
         for val in self.node_list:
             if index in val.references:
-                ind = self.node_list.index(val)
-                if len(self.node_list) - 1 > ind > 0:
-                    # print('Returning: ', ' ', [ind - 1, ind + 1])
-                    return val.value, [self.node_list[ind - 1], self.node_list[ind + 1]]
-                elif ind == 0:
-                    # print('Returning: ', val, ' ', [1])
-                    return val.value, [self.node_list[1]]
-                elif ind == self.length - 1:
-                    # print('Returning: ', val, ' ', [self.length - 1])
-                    return val.value, [self.node_list[self.length - 1]]
-                else:
-                    print('None will be returned for index ', index)
+                return val.value
+                # ind = self.node_list.index(val)
+                # if len(self.node_list) - 1 > ind > 0:
+                #     # print('Returning: ', ' ', [ind - 1, ind + 1])
+                #     return val.value, [self.node_list[ind - 1], self.node_list[ind + 1]]
+                # elif ind == 0:
+                #     # print('Returning: ', val, ' ', [1])
+                #     return val.value, [self.node_list[1]]
+                # elif ind == self.length - 1:
+                #     # print('Returning: ', val, ' ', [self.length - 1])
+                #     return val.value, [self.node_list[self.length - 1]]
+                # else:
+                #     print('None will be returned for index ', index)
 
         return None
 
     def neighbour_weight(self, value) -> (float, float):
         val = Value(value)
-        # return [neighbour_weights(x.value, value, self.value_range) for x in self.node_list]
-        try:
-            index = self.node_list.index(val)
-            # index = index[0].value if len(index) > 0 else None
-            print("Index: ", index)
-            if len(self.node_list) > index > 0:
-                return [
-                    neighbour_weights(self.node_list[index - 1].value, self.node_list[index].value, self.value_range),
-                    neighbour_weights(self.node_list[index + 1].value, self.node_list[index].value, self.value_range)]
-            elif index == 0:
-                return [neighbour_weights(self.node_list[0].value, self.node_list[1].value, self.value_range)]
-            elif index == self.length - 1:
-                return [neighbour_weights(self.node_list[self.length - 1].value, self.node_list[self.length].value,
-                                          self.value_range)]
-        except:
-            print("Specified value " + str(value) + " not found in list")
+        return [neighbour_weights(x.value, value, self.value_range) for x in self.node_list]
+        # try:
+        #     index = self.node_list.index(val)
+        #     # index = index[0].value if len(index) > 0 else None
+        #     print("Index: ", index)
+        #     if len(self.node_list) > index > 0:
+        #         return [
+        #             neighbour_weights(self.node_list[index - 1].value, self.node_list[index].value, self.value_range),
+        #             neighbour_weights(self.node_list[index + 1].value, self.node_list[index].value, self.value_range)]
+        #     elif index == 0:
+        #         return [neighbour_weights(self.node_list[0].value, self.node_list[1].value, self.value_range)]
+        #     elif index == self.length - 1:
+        #         return [neighbour_weights(self.node_list[self.length - 1].value, self.node_list[self.length].value,
+        #                                   self.value_range)]
+        # except:
+        #     print("Specified value " + str(value) + " not found in list")
 
     def __update(self, node, value, reference):
         if node.value == value:
