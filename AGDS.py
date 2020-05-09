@@ -1,9 +1,39 @@
+from list import *
 import numpy as np
 
-l = [1, 2, 3, 4]
 
-m = list(filter(lambda x: x == 6, l))
+class AGDS:
+    def __init__(self, data_frame):
+        self.categories = {}
+        self.dataset_len = len(data_frame[:])
+        # print('Dataset len: ', self.dataset_len)
+        self.instances = np.zeros(self.dataset_len)
+        for attr in data_frame:
+            i = 0
+            self.categories[attr] = List(1)
+            # todo: vectorization
+            for v in data_frame[attr]:
+                self.categories[attr].create_node(v, i)
+                i = i + 1
+                # self.categories[attr].create_node(v, data_frame[attr].iloc[v])
 
-print(m)
-print(l)
-l.append(7)
+            self.categories[attr].compile()
+        self.conn_weight = 1/len(data_frame.keys())
+        # print("Dataset: ", self.dataset_len)
+
+    def calculate(self, index):
+        for attr in self.categories.keys():
+            print('Key: ', attr)
+            print('Values: ', self.categories[attr])
+            res, vals = self.categories[attr].find_value_for_ref(index)
+            weig = self.categories[attr].neighbour_weight(res)
+            print('VAL: ', vals, ' WEI: ', weig)
+            for i in range(0, len(vals)):
+                self.instances[vals[i].references] = self.instances[vals[i].references] + weig[i]*self.conn_weight
+                # print("After adding: ", self.instances)
+
+        return self.instances, np.nonzero(self.instances > 0.5)
+
+
+
+
