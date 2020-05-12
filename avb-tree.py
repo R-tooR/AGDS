@@ -1,5 +1,4 @@
 from value_store import ValueStore
-import numpy as np
 
 
 class AVB(ValueStore):

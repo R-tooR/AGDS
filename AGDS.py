@@ -21,7 +21,7 @@ class AGDS:
         self.conn_weight = 1/len(data_frame.keys())
         # print("Dataset: ", self.dataset_len)
 
-    def calculate(self, index):
+    def calculate(self, index, sim_threshold=0.97):
         for attr in self.categories.keys():
             print('Key: ', attr)
             print('Values: ', self.categories[attr])
@@ -36,7 +36,7 @@ class AGDS:
                 self.instances[nodes[i].references] = self.instances[nodes[i].references] + weig[i]*self.conn_weight
                 # print("After adding: ", self.instances)
 
-        return self.instances, np.nonzero(self.instances > 0.97)
+        return self.instances, np.nonzero(self.instances > sim_threshold)
 
 
 

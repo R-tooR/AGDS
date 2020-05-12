@@ -52,6 +52,6 @@ df = pd.read_excel(Path('~/irisData.xls'), header=None, index_col=None)
 
 agds = AGDS(df)
 
-res = agds.calculate(7)
+res = agds.calculate(111, sim_threshold=0.9)
 
 print(res)
