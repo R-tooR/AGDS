@@ -1,9 +1,10 @@
 from value_store import ValueStore
-import numpy as np
 
 
 def neighbour_weights(value1, value2, val_range):
     if type(value1) == float and type(value2) == float:
+        return 1 - abs(value1 - value2) / val_range
+    elif type(value1) == int and type(value2) == int:
         return 1 - abs(value1 - value2) / val_range
     elif type(value1) == str and type(value2) == str:
         return 1. if value1 == value2 else 0.
@@ -31,17 +32,24 @@ class List(ValueStore):
             return False
 
     def compile(self):
-        # convert prepared list to numpy array so it will be faster
         self.node_list.sort()
-        # self.node_list = np.asarray(self.node_list).sort()
-        if type(self.node_list[0].value) == float:
+        if type(self.node_list[0].value) == float or type(self.node_list[0].value) == int:
             self.value_range = self.node_list[len(self.node_list) - 1].value - self.node_list[0].value
-        self.length = len(self.node_list)
-        # debug
-        # print("Sorted list: ", self.node_list)
-        # print("Range of values: ", self.value_range)
 
-    # todo vectorization
+    def get_subgraph(self, x_start, y_start, step, scale, axis):
+        subgraph = []
+        pos_x = x_start
+        pos_y = y_start
+        for n in self.node_list:
+            subgraph.append({'value': n, 'pos': [pos_x, pos_y]})
+            pos_x = pos_x + step*scale if axis == 0 else pos_x
+            pos_y = pos_y + step*scale if axis == 1 else pos_y
+
+        return subgraph, pos_x, pos_y
+
+    def get_len(self):
+        return len(self.node_list)
+
     def find_value_for_ref(self, index):
         for val in self.node_list:
             if index in val.references:
