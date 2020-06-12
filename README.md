@@ -9,7 +9,7 @@ Also, such a structure is "lighter" because of removing duplicates of same value
 How to use application:
 1. Clone repository
 2. Run shell, go to repo directory and type `python gui.py`
-3. Select file to load (file should be `.csv` or `.xls`) ![Load](/images/calculate.PNG)
+3. Select file to load (file should be `.csv` or `.xls`) ![Load](/images/loadfile.PNG)
 4. Graph will be drawn automatically (instances nodes are on the upper part of plot, while values on lower part).
 5. Default instance, which is selected, is instance of index `0` (first row of dataset)
 6. Use slider to adjust graph to contain only instances, which similarity parameter is bigger than selected.
