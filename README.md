@@ -16,3 +16,5 @@ How to use application:
 7. To change instance, to which others will be compared, in spin select instance with different id, and click `Calculate`
 ![Calculate](/images/calculate.PNG)
 8. Graph should be redrawn for similarity threshold equal to `0`
+
+WARNING: Due to usage of Matplotlib to draw application can be slow, especially for datasets above 500 records. This is initial version of project with potential to further development and optimization.
